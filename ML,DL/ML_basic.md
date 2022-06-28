@@ -4,6 +4,7 @@ sklearn
     sklearn.metrics - mean_absolute_error : 평균차이 절대값
     
     sklearn.tree - DecisionTreeRegressor - 결정트리모델
+    sklearn.ensemble - RandomForestRegressor
     
 
 ### overfitting
