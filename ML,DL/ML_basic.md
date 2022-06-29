@@ -14,3 +14,10 @@ sklearn
 ### underfitting
 
 모델이 중요한 차별점(distinction)을 구분하지 못하여서 train데이터도 예측에 실패
+
+
+## 모델
+
+- RandomForest
+
+앙상블 기법: 여러개의 모델들을 돌리고 평균내는 방법
