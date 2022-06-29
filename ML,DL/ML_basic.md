@@ -1,7 +1,11 @@
 sklearn
 
-    sklearn.model_selection - train_test_split : train, test용 데이터 나누기
-    sklearn.metrics - mean_absolute_error : 평균차이 절대값
+    sklearn.model_selection 
+        - train_test_split : train, test용 데이터 나누기
+    sklearn.metrics : 모델 테스트
+        - mean_absolute_error : 평균차이 절대값
+    sklearn.impute : na값 대체
+        - SimpleImputer : strategy에따라 간단하게 na값 교체 (default:mean)
     
     sklearn.tree - DecisionTreeRegressor - 결정트리모델
     sklearn.ensemble - RandomForestRegressor
@@ -14,6 +18,11 @@ sklearn
 ### underfitting
 
 모델이 중요한 차별점(distinction)을 구분하지 못하여서 train데이터도 예측에 실패
+
+# 모델 향상하기 위해서 어떻게
+
+전처리 방식에따라 성능이 많이 갈림 -> 매우 중요
+
 
 
 ## 모델
