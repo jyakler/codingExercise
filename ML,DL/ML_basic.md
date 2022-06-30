@@ -6,6 +6,9 @@ sklearn
         - mean_absolute_error : 평균차이 절대값
     sklearn.impute : na값 대체
         - SimpleImputer : strategy에따라 간단하게 na값 교체 (default:mean)
+    sklearn.preprocessing: 전처리
+        - OrdinalEncoder
+        - OneHotEncoder
     
     sklearn.tree - DecisionTreeRegressor - 결정트리모델
     sklearn.ensemble - RandomForestRegressor
@@ -29,4 +32,14 @@ sklearn
 
 - RandomForest
 
-앙상블 기법: 여러개의 모델들을 돌리고 평균내는 방법
+앙상블 기법: 여러개의 모델들을 돌려 더나은 결과를 도출하는 기법( voting, bagging, boosting)
+
+
+## categorical variable
+
+1. drop
+2. ordinal encoding
+3. one-hot encoding
+```
+전처리시 A.select_dtypes(exclude=['object']) 로 category 칼럼 제외가능
+```
