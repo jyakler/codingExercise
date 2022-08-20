@@ -12,6 +12,10 @@
     보상시스템  
     연속된 행동에서 학습  
 
+## 용어
+
+
+
 sklearn
 
     sklearn.model_selection 
