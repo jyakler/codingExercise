@@ -33,3 +33,15 @@ L1 Regularization - 모델복잡도 줄이는 방법
 
 logisticRegression solver 중 lbfgs, newton-cg, sag는 L2만 지원   
 saga, liblinear는 L1,L2지원
+
+
+
+## 차원축소
+
+특성선택 
+
+순차 특성 선택
+
+  - 규제 사용하지 않는 알고리즘때 유리
+  - greedy algorithm방식
+  - 순차 후진 선택(sequential backward selection) - 전통적 알고리즘
