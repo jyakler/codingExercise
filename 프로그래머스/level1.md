@@ -1,7 +1,9 @@
 # 프로그래머스 문제 level 1
 
-[신고결과받기](https://school.programmers.co.kr/learn/courses/30/lessons/92334)
+(2022/10/9)
 
+[신고결과받기](https://school.programmers.co.kr/learn/courses/30/lessons/92334)
+---------
 ```python
 def solution(id_list, report, k):
     answer = [0]*len(id_list)
@@ -22,7 +24,7 @@ def solution(id_list, report, k):
 
 
 [크레인 인형뽑기 게임](https://school.programmers.co.kr/learn/courses/30/lessons/64061)
-
+----------
 ```python
 def solution(board, moves):
     answer = 0
@@ -52,3 +54,31 @@ def solution(board, moves):
 우선 인형을 뽑는 것처럼 list에서 pop하고 싶었기에 처음 주어진 board 구조로는 어려움이 있어서 새로운 list 배열을 생성해서 사용함
 
 근데 다른사람 풀이를 보니 굳이 그렇게 구현하지 않고도 뽑은 범위를 0 으로 만들면 되었음 ㅜㅜ
+
+
+[완주하지 못한 선수](https://school.programmers.co.kr/learn/courses/30/lessons/42576)
+------------
+```python
+def solution(participant, completion):
+    answer = ''
+    for i in completion:
+        participant.remove(i)
+    return participant[0]
+```
+그냥 리스트에서 제거하면서 하면 될 것같았는데 정답은 맞았지만 효율성 테스트에서 시간초과로 오답이 나옴
+
+입력값이 10만이기때문에 dict사용하면 될 것같음
+
+```python
+def solution(participant, completion):
+    dict={}
+    for key in participant:
+        dict[key]=dict.get(key,0)+1
+    for k in completion:
+        dict[k]-=1
+    return [i for i in dict if dict[i]>0][0]
+```
+
+사실 위에서도 적었지만 dict구현방법은 예전 학부시절 몇번 써보긴했는데 기억이 안나서 해당 코드 다시열어서 내가 짰던 것 참고함...
+
+list index, append ,pop는 O(1)로 알고있는데 위의 코드가 왜 time out 됬는지 궁금했는데 remove는 O(N)였던것.. for루프안에서 썼으니 $N^2$ 였던 것
