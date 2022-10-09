@@ -82,3 +82,8 @@ def solution(participant, completion):
 사실 위에서도 적었지만 dict구현방법은 예전 학부시절 몇번 써보긴했는데 기억이 안나서 해당 코드 다시열어서 내가 짰던 것 참고함...
 
 list index, append ,pop는 O(1)로 알고있는데 위의 코드가 왜 time out 됬는지 궁금했는데 remove는 O(N)였던것.. for루프안에서 썼으니 $N^2$ 였던 것
+
+(2022/10/10)
+
+[키패드 누르기](https://school.programmers.co.kr/learn/courses/30/lessons/67256)
+----------
