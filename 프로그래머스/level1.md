@@ -182,5 +182,30 @@ def solution(n, lost, reserve):
 
 [성격 유형 검사하기](https://school.programmers.co.kr/learn/courses/30/lessons/118666)
 ----------------
+```python
+def solution(survey, choices):
+    answer = ''
+    dict={"R":0,"T":0,"C":0,"F":0,"J":0,"M":0,"A":0,"N":0}
+    for q,c in zip(survey,choices):
+        f,s=q[0],q[1]
+        if c==4:
+            continue
+        elif c<4:
+            dict[f]+=4-c
+        elif c>4:
+            dict[s]+=c-4
+    key=[i for i in dict.keys()]
+    for i in range(0,len(key),2):
+        if dict[key[i]]-dict[key[i+1]]>=0:
+            answer+=key[i]
+        else:
+            answer+=key[i+1]
+    return answer
+```
+계속 dict가 나오다보니 한번 dict를 사용해서 구현해보았음
 
+바보같이 1,2,3 선택지일때 어떻게해야 3,2,1 을 얻을 수 있을지 한참 고민했었는데 4-i 로 쉽게 해결 .....
 
+dict.keys()를 쓰고 index로 찾아갈 수 있을 줄알았는데 그게 안되서 iter해서 리스트 생성함
+
+다른사람 코드를 보니 각각 유형을 dict로 안만들고 쌍으로 만든다음 점수가 양음으로 판단하게 해도 됬었음
