@@ -87,3 +87,67 @@ list index, append ,pop는 O(1)로 알고있는데 위의 코드가 왜 time out
 
 [키패드 누르기](https://school.programmers.co.kr/learn/courses/30/lessons/67256)
 ----------
+```python
+def solution(numbers, hand):
+    answer = ''
+    posr=12
+    posl=10
+    for i in numbers:
+        if i in (1,4,7):
+            answer+="L"
+            posl=i
+        elif i in (3,6,9):
+            answer+="R"
+            posr=i
+        else:
+            if i==0:
+                i=11
+            ll=10
+            lr=10
+            #L
+            if posl-i==-1 or abs(posl-i)==3:
+                ll=1
+            elif posl-i==-4 or posl-i==2 or abs(posl-i)==6:
+                ll=2
+            elif posl-i==-7 or posl-i==5 or abs(posl-i)==9:
+                ll=3
+            elif posl-i==0:
+                ll=0
+            else:
+                ll=4
+            #R
+            if posr-i==1 or abs(posr-i)==3:
+                lr=1
+            elif posr-i==4 or posr-i==-2 or abs(posr-i)==6:
+                lr=2
+            elif posr-i==-5 or posr-i==7 or abs(posr-i)==9:
+                lr=3
+            elif posr-i==0:
+                lr=0
+            else:
+                lr=4
+            #score    
+            if lr==ll:
+                if hand[0]=="r":
+                    answer+="R"
+                    posr=i
+                else:
+                    answer+="L"
+                    posl=i
+            elif lr>ll:
+                answer+="L"
+                posl=i
+            else:
+                answer+="R"
+                posr=i
+    return answer
+```
+이동좌표 관련 문제는 처음이라 어떻게 풀까 고민하다가 원시적으로 하나하나 다계산해서  if문으로 넣음
+
+처음에는 오류가 나서 통과가 안되었는데 이유가 같은 번호를 연속으로 누를 경우를 고려안했었음 ㅜㅜ
+
+정답 통과하고 다른사람 풀이보니까 또 dict써서 좌표를 맨해탄 기법으로 구하면 되었던걸 너무 복잡하게 생각했나봄
+
+
+[체육복](https://school.programmers.co.kr/learn/courses/30/lessons/42862)
+------------------
