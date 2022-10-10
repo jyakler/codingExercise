@@ -209,3 +209,35 @@ def solution(survey, choices):
 dict.keys()를 쓰고 index로 찾아갈 수 있을 줄알았는데 그게 안되서 iter해서 리스트 생성함
 
 다른사람 코드를 보니 각각 유형을 dict로 안만들고 쌍으로 만든다음 점수가 양음으로 판단하게 해도 됬었음
+
+
+[숫자 짝궁](https://school.programmers.co.kr/learn/courses/30/lessons/131128)
+--------------
+```python
+def solution(X, Y):
+    answer = ''
+    xdic={}
+    ydic={}
+    for key in X:
+        xdic[key]=xdic.get(key,0)+1
+    for key in Y:
+        ydic[key]=ydic.get(key,0)+1
+    a=[i for i in xdic.keys() if i in ydic.keys()]
+    if len(a)==0:
+        answer="-1"
+    elif len(a)==1 and a[0]=="0":
+        answer="0"
+    else:
+        a.sort(reverse=True)
+        for i in a:
+            answer+=i*min(xdic[i],ydic[i])
+    return answer
+```
+여러 문제 풀다보니 dict가 매우 편리한 것을 느꼈음
+
+처음에는 또 공통된것을 remove하고 모아놓으려 했는데 입력값이 300백만까지 길어진다 해서 아무리봐도 시간이 너무 오래걸릴 것같아 이방법으로는 불가능 하다 생각함
+
+풀면풀수록 level1 문제는 10~15분안에 풀리는 것같음.
+
+카카오 기출의 경우 문제 자체를 이해하는데 시간이 오래걸리는 것 같음
+
