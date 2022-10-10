@@ -151,3 +151,36 @@ def solution(numbers, hand):
 
 [체육복](https://school.programmers.co.kr/learn/courses/30/lessons/42862)
 ------------------
+```python
+def solution(n, lost, reserve):
+    answer = n
+    a=[x for x in lost if x in reserve]
+    result=[]
+    resultl=[]
+    for aa in a:
+        lost.remove(aa)
+        reserve.remove(aa)
+    lost.sort()
+    reserve.sort()
+    for l in lost:
+        for r in reserve:
+            if r in result:
+                continue
+            print(l)
+            print(r)
+            if abs(r-l)==1:
+                result.append(r)
+                resultl.append(l)
+                break
+    return answer-len(lost)+len(resultl)
+```
+체육복을 빌릴 수 있는 범위가 크면 모르겠지만 딱 1일경우 순서를 고려했을때 결과가 바뀌지 않기 때문에 구현하는데 어려움이 없었음
+
+처음에는 lost,reserve에서 remove하면서 하려했는데 remove할시  for iteration에서 인덱스 변경으로인해 인식이 제대로 이루어지지 않았기에 그냥 따로 리스트를 만들어 거기에 입력하는 방식을 체택함
+
+다른 사람코드를 보니 굳이 이중 for안돌리고도 할 수 있는 작업이였음 ㅜ 
+
+[성격 유형 검사하기](https://school.programmers.co.kr/learn/courses/30/lessons/118666)
+----------------
+
+
