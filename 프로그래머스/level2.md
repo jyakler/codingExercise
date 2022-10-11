@@ -50,3 +50,19 @@ def solution(clothes):
     l=list(map(lambda x: x+1,l))
     return math.prod(l)-1
 ```
+
+
+[가장 큰 수](https://school.programmers.co.kr/learn/courses/30/lessons/42746?language=python3#)
+----------
+```python
+def solution(numbers):
+    answer = ''
+    sn=list(map(str,numbers))
+    sn.sort(key=lambda x:x*3,reverse=True)
+    return str(int(''.join(sn)))
+```
+처음에는 sort할때 key값없이 그냥했다가 3<30이 되어서 330이 아니라 303이 만들어 졌기에 오류가 뜸
+
+숫자가 0~1000사이의 숫자였기에 \*3를 해주어서 비교하니 답이 나왔는데 테케 11에서 틀림
+
+찾아보니 0,0,0 이 들어올때 "000" 이 되도록 했어서 return할때 int로 잠깐 바꾸는 과정을 거침
