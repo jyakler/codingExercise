@@ -66,3 +66,54 @@ def solution(numbers):
 숫자가 0~1000사이의 숫자였기에 \*3를 해주어서 비교하니 답이 나왔는데 테케 11에서 틀림
 
 찾아보니 0,0,0 이 들어올때 "000" 이 되도록 했어서 return할때 int로 잠깐 바꾸는 과정을 거침
+
+
+[소수 찾기](https://school.programmers.co.kr/learn/courses/30/lessons/42839?language=python3)(완전탐색)
+---------
+```python
+from itertools import permutations
+def solution(numbers):
+    answer = 0
+    all_comb=list()
+    l=[numbers[i] for i in range(len(numbers))]
+    for i in range(1,len(l)+1):
+        all_comb+=list(permutations(numbers,i))
+    an=list(map(lambda x: int(''.join(x)),all_comb))
+    for i in set(an):
+        if i<2:
+            continue
+        for n in range(2,i):
+            if i%n==0:
+                answer-=1
+                break
+        answer+=1
+    return answer
+```
+소수를 찾는 쉬운 방법이 생각이안나 그냥 2부터 다 나눠보는것으로 진행
+
+[카펫](https://school.programmers.co.kr/learn/courses/30/lessons/42842?language=python3)
+---------
+```python
+def solution(brown, yellow):
+    answer = []
+    j=0
+    for i in range(1,yellow+1):
+        if yellow%i==0:
+            j=yellow//i
+            if (max(i,j)+2)*2+min(i,j)*2==brown:
+                return [max(i,j)+2,min(i,j)+2]
+    return answer
+```
+문제는 의외로 간단했음
+
+갑자기 다른방식으로도 풀어보고 싶어서
+```python
+def solution(brown, yellow):
+    answer = []
+    j=(brown-4)//2
+    for i in range(1,yellow+1):
+        if yellow%i==0 and i+yellow//i==j:
+            return [max(i,yellow//i)+2,min(i,yellow//i)+2]
+    return answer
+```
+이렇게도 풀어보았음 같은건가....?
