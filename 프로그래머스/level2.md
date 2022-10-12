@@ -117,3 +117,39 @@ def solution(brown, yellow):
     return answer
 ```
 이렇게도 풀어보았음 같은건가....?
+
+
+[전력망을 둘로 나누기](https://school.programmers.co.kr/learn/courses/30/lessons/86971?language=python3)
+------
+```python
+def solution(n, wires):
+    answer = -1
+    nodes=[[]*1 for _ in range(n)]
+    r=[]
+
+    for s,e in wires:
+        nodes[s-1].append(e-1)
+        nodes[e-1].append(s-1)
+    for i in nodes:
+        i.sort()
+    for s,e in wires:
+        c1=nodes[s-1].copy()
+        c1.remove(e-1)
+        c1.append(s-1)
+        for i in c1:
+            if i==s-1:
+                continue
+            for j in nodes[i]:
+                if j not in c1 and j!=s-1:
+                    c1.append(j)
+        r.append(abs(n-2*len(c1)))
+    return min(r)
+```
+최근에 풀었던 문제중 고민 많이 했던 것 같은 문제
+
+처음 풀었을때는 테케 1에서 오류가나서 처음부터 갈아엎고 만듬
+
+우선 각 노드에 연결된 노드를 nodes에 넣고 brute force방식처럼 하나하나 확인함
+
+머릿속으로는 bfs, dfs로 풀면된다! 하는데 학부때 했던 구현방법이 기억안나서 이렇게 함
+
