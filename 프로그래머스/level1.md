@@ -241,3 +241,33 @@ def solution(X, Y):
 
 카카오 기출의 경우 문제 자체를 이해하는데 시간이 오래걸리는 것 같음
 
+(2022-10-12)
+
+[모의고사](https://school.programmers.co.kr/learn/courses/30/lessons/42840?language=python3)
+--------
+```python
+def solution(answers):
+    answer = []
+    # c1=len([x for i,x in enumerate(answers) if x%6==i+1])
+    a1=[1,2,3,4,5]
+    c1,c2,c3=0,0,0
+    a2=[2,1,2,3,2,4,2,5]
+    a3=[3,3,1,1,2,2,4,4,5,5]
+    for i,x in enumerate(answers):
+        if a1[i%5]==x:
+            c1+=1
+        if a2[i%8]==x:
+            c2+=1
+        if a3[i%10]==x:
+            c3+=1
+    m=max([c1,c2,c3])
+    for i,x in enumerate([c1,c2,c3]):
+        if x==m:
+            answer.append(i+1)
+    return answer
+```
+무식하게 패턴을 리스트로 만든다음 반복여부를 확인함 
+
+생각보다 복잡한 것같아 다른사람 코드를 봤는데 비슷하게 짠 사람이 많았음 
+
+너무 똑같이 짠 사람도있어서 놀람
