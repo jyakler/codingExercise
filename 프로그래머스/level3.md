@@ -40,3 +40,18 @@ $12=(55+5)/2$ 이 예시를 보고 다시 처음부터 생각해야 했다.
 
 바로 직접 코드를 짜보았다. 접근 방식만 알면 생각보다 문제가 쉽게 풀리는 느낌을 받았음
 
+[정수 삼각형](https://school.programmers.co.kr/learn/courses/30/lessons/43105?language=python3)
+-------
+```python
+def solution(triangle):
+    answer = 0
+    l=len(triangle)
+    dp=[[0]*l for _ in range(l)]
+    dp[0][0]=triangle[0][0]
+    for i in range(0,l-1):
+        for j in range(i+1):
+            dp[i+1][j]=max(dp[i+1][j],dp[i][j]+triangle[i+1][j])
+            dp[i+1][j+1]=max(dp[i+1][j+1],dp[i][j]+triangle[i+1][j+1])
+    return max(dp[l-1])
+```
+DP 문제의 정석 예시로 처음 배울 때 해보았던 코드라 금방 짤 수 있었음.
