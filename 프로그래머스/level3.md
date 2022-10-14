@@ -55,3 +55,129 @@ def solution(triangle):
     return max(dp[l-1])
 ```
 DP 문제의 정석 예시로 처음 배울 때 해보았던 코드라 금방 짤 수 있었음.
+
+
+[섬 연결하기](https://school.programmers.co.kr/learn/courses/30/lessons/42861?language=python3#)(Greedy)(MST문제)
+--------
+```python
+def solution(n, costs):
+    answer = 0
+    v=[0 for _ in range(n)]
+
+    d={}
+    for s,e,c in costs:
+        d[c]=d.get(c,list())+[(s,e)]
+    # print(d)
+    while(sum(v)!=n):
+        print(d)
+        print(v)
+        for a,b in d[min(d)]:
+            if v[a]==0 or v[b]==0:
+                v[a]=1
+                v[b]=1
+                answer+=min(d)
+        del d[min(d)]
+    return answer
+"""
+첫풀이= 최소 cost만 찾아서 잇는거 하려했는데 동떨어진 2개의 꼭지점을 계산해버리면 오류발생
+"""
+```
+처음에는 min cost선분부터 고르는 식으로 했는데  min cost가 동떨어진곳에서 발생하면 오류가 생겼음
+
+예전에 배웠던 알고리즘 생각해서 했던건데 나중에 찾아보니 Kruskal 알고리즘을 사용하려했었던 거였음
+
+```python
+def solution(n, costs):
+    answer = 0
+    m=set()
+    d={}
+    for s,e,c in costs:
+        d[c]=d.get(c,list())+[(s,e)]
+    while(len(m)!=n):
+        for a,b in d[min(d)]:
+            if len(m)==0:
+                print(a,b)
+                print(min(d))
+                m.update([a,b])
+                answer+=min(d)
+                continue
+            if ((a in m) ^ (b in m))==1:
+                m.update([a,b])
+                print(a,b)
+                print(min(d))
+                answer+=min(d)
+        del d[min(d)]
+    return answer
+
+"""
+집단 안에있는 vertex에서 이어져있는 놈 중 min을 고르는데 루프는 전체의 min부터 보다보니까 하나 건너서 돌아가야할때 못돌아감
+"""
+```
+그래서 min부터 돌되 메인 집합에 포함되어있는 애가 있어야지 계산하도록했는데 그게 최소가 아니라 나중에 다시 최소값을 찾아야할때 못찼았음.
+
+여기서 조금 수정하면 풀릴 것같았는데 그냥 처음부터 다시 풀어봄
+
+```python
+def solution(n, costs):
+    v=[[]*1 for _ in range(n)]
+    m=1e9
+    a=-1
+    b=-1
+    for s,e,c in costs:
+        if m>c:
+            m=c
+            a=s
+            b=e
+        v[s].append((c,e))
+        v[e].append((c,s))
+    r=v[a]+v[b]
+    l=[a,b]
+    answer=m
+    r.sort(reverse=True)
+    while(len(l)!=n):  
+        c,s=r.pop()
+        if s in l:
+            continue
+        else:
+            l.append(s)
+            r+=v[s]
+            r.sort(reverse=True)
+            answer+=c
+
+    return answer
+```
+이게 다익스트라였나 했는데 프림알고리즘이였음 
+
+확실히 학부때 들은건 있어서 써보려하는데 너무 대충 알고있는 것 같음..
+
+매번 sort하는게 마음에 안들고 뭔가 heapq를 써보고싶어서 다시만듬
+```python
+import heapq
+def solution(n, costs):
+    v=[[]*1 for _ in range(n)]
+    m=1e9
+    a=-1
+    b=-1
+    for s,e,c in costs:
+        if m>c:
+            m=c
+            a=s
+            b=e
+        v[s].append((c,e))
+        v[e].append((c,s))
+    r=v[a]+v[b]
+    l=[a,b]
+    answer=m
+    r.sort()
+    while(len(l)!=n):  
+        c,s=heapq.heappop(r)
+        if s in l:
+            continue
+        else:
+            l.append(s)
+            for i in v[s]:
+                heapq.heappush(r,i)
+            answer+=c
+    return answer
+```
+sort를 덜하니까 좀더 빠를 줄 알았는데 heappush를 계속 해서 그런지 느림... 테케기준으로는 이게 시간이 더 오래걸림
