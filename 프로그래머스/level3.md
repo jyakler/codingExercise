@@ -181,3 +181,57 @@ def solution(n, costs):
     return answer
 ```
 sort를 덜하니까 좀더 빠를 줄 알았는데 heappush를 계속 해서 그런지 느림... 테케기준으로는 이게 시간이 더 오래걸림
+
+
+[가장 먼 노드](https://school.programmers.co.kr/learn/courses/30/lessons/49189?language=python3)
+------
+```python
+def solution(n, edge):
+    answer = 0
+    v=[[]*1 for _ in range(n)]
+    r=[1e9 for _ in range(n)]
+    r[0]=0
+    for s,e in edge:
+        v[s-1].append(e-1)
+        v[e-1].append(s-1)
+    q=[0]#queue
+    d=[]#done
+    while q:
+        j=q.pop()
+        d.append(j)
+        for i in v[j]:
+            if i in d:
+                continue
+            else:
+                r[i]=min(r[i],r[j]+1)
+                q.append(i)
+    m=max(r)
+    return len([i for i,e in enumerate(r) if e==m])
+```
+처음에 짰던 코드인데 테케 5,7,9 가 틀려서 왜 틀렸나했는데 list에 중간에 뭐가 추가되는데 pop이 queue가아니라 stack방식으로 작용하기에 연산이 잘못된거였음
+
+그래서 deque사용해서 아래와 같이 함
+```python
+from collections import deque
+def solution(n, edge):
+    answer = 0
+    v=[[]*1 for _ in range(n)]
+    r=[1e9 for _ in range(n)]
+    visited=[0 for _ in range(n)]
+    r[0]=0
+    for s,e in edge:
+        v[s-1].append(e-1)
+        v[e-1].append(s-1)
+    q=deque()
+    q.append(0)
+    while q:
+        i=q.popleft()
+        if visited[i]!=0:
+            continue
+        visited[i]=1
+        for e in v[i]:
+            r[e]=min(r[e],r[i]+1)
+            q+=[e]
+    m=max(r)
+    return len([i for i,e in enumerate(r) if e==m])
+```
