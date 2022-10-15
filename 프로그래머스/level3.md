@@ -235,3 +235,68 @@ def solution(n, edge):
     m=max(r)
     return len([i for i,e in enumerate(r) if e==m])
 ```
+
+[네트워크](https://school.programmers.co.kr/learn/courses/30/lessons/43162?language=python3)(DFS,BFS)
+```python
+def solution(n, computers):
+    parent=[i for i in range(n)]
+    for i,x in enumerate(computers):
+        for k in range(n):
+            if x[k]!=1:
+                continue
+            if k==i:
+                continue
+            unionparent(parent,x[k],i)
+    return len(set(parent))
+
+def getparent(parent,i):
+    if parent[i]==i:
+        return parent[i]
+    return getparent(parent,parent[i])
+
+def unionparent(parent,a,b):
+    a=getparent(parent,a)
+    b=getparent(parent,b)
+    if a<b:
+        parent[b]=a
+    else:
+        parent[a]=b
+```
+전에 섬연결 문제에서 다른사람이 union and find방식으로 푸는 것을 보고 이문제를 보았을때 그걸 활용하면 되겠다고 생각해서 시도해봄
+
+근데 unionparent(parent,`x[k]` k대신 써서 일단 여기서 에러였고 두번째로는 아래 그림같은 케이스일때 오류가 떴음
+
+의아했던거는 맞으면 안될 것같은 코드가 테케 2,4,7인가? 를 제외하고 맞았다는 것
+
+![image](https://user-images.githubusercontent.com/49812691/195991930-86b1dace-2d5c-44ac-b8e0-70c53e106d8a.png)
+
+그것을 수정한게 다음 코드
+```python
+def solution(n, computers):
+    parent=[i for i in range(n)]
+    for i,x in enumerate(computers):
+        for k in range(n):
+            if x[k]!=1:
+                continue
+            # if k==i:
+            #     continue
+            unionparent(parent,k,i)
+    for i in range(n):
+        getparent(parent, i)
+    return len(set(parent))
+
+def getparent(parent,i):
+    if parent[i]!=i:
+        parent[i]=getparent(parent,parent[i])
+    return parent[i]
+
+def unionparent(parent,a,b):
+    a=getparent(parent,a)
+    b=getparent(parent,b)
+    if a<b:
+        parent[b]=a
+    else:
+        parent[a]=b
+```
+
+우선 unionparent부분 수정하고 맨 마지막에 parent를 돌면서 한번씩 getparent를 써서 누락된것을 바꿔주는 작업을 거침
