@@ -237,6 +237,7 @@ def solution(n, edge):
 ```
 
 [네트워크](https://school.programmers.co.kr/learn/courses/30/lessons/43162?language=python3)(DFS,BFS)
+----------
 ```python
 def solution(n, computers):
     parent=[i for i in range(n)]
