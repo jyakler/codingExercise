@@ -271,3 +271,50 @@ def solution(answers):
 생각보다 복잡한 것같아 다른사람 코드를 봤는데 비슷하게 짠 사람이 많았음 
 
 너무 똑같이 짠 사람도있어서 놀람
+
+(2023-03-24)
+[개인정보파기](https://school.programmers.co.kr/learn/courses/30/lessons/150370)
+-------
+```python
+def solution(today, terms, privacies):
+    answer = []
+    d=dict()
+    for i in terms:
+        k,v=i.split(' ')
+        d[k]=d.get(k,v)
+    for i,dat in enumerate(privacies):
+        new=date(dat,d)
+
+        if new<today:
+            answer.append(i+1)
+    return answer
+
+def date(date,d):
+    date,mon=date.split(' ')
+    mon=int(d[mon])
+    yr,m,d=date.split('.')
+    yr=int(yr);m=int(m);d=int(d)
+    yr+=mon//12
+    mon=mon%12
+    if d>1:
+        d-=1
+    else:
+        d=28
+        m-=1
+    if m+mon>12:
+        m=m+mon-12
+        yr+=1
+    else:
+        m+=mon
+    if m<10:
+        m='0'+str(m)
+    if d<10:
+        d='0'+str(d)
+    new=str(yr)+'.'+str(m)+'.'+str(d)
+    return new
+```
+
+점심을 굶어서 그런가 한동안 알고리즘 문제 풀지 않다가 오랜만에 왔다고 코드 좀 더럽게 짜여짐..
+
+다행히도 코드 자체에는 문제가 없어서 잘 돌아갔지만 좀 굳이 이렇게 연도,월,일 비교하기보다 모두 일 로 바꿔서 계산하면 편할 것같음 (28일 고정 가정이므로)
+
