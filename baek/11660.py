@@ -1,20 +1,15 @@
+import sys
+input=sys.stdin.readline
 sq,cal=map(int,input().split())
 cube=[]
 for _ in range(sq):
     cube.append(list(map(int,input().split())))
-S=[]    
-#구간합 구하기
-for i in range(sq):
-    temp=0
-    templ=[]
-    for j in range(sq):
-        temp+=cube[i][j]
-        templ.append(temp)
-    S.append(templ)
+S=[[0 for _ in range(sq+1)] for _ in range(sq+1)]  
+
+for i in range(1,sq+1):
+    for j in range(1,sq+1):
+        S[i][j]=S[i-1][j]+S[i][j-1]-S[i-1][j-1]+cube[i-1][j-1]
 
 for _ in range(cal):
-    result=0
     x1,y1,x2,y2=map(int,input().split())
-    for i in range(x1-1,x2):
-        result+=(S[i][y2-1]-S[i][y1-1])
-    print(result)
+    print(S[x2][y2]-S[x2][y1-1]-S[x1-1][y2]+S[x1-1][y1-1])
