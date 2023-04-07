@@ -301,3 +301,56 @@ def unionparent(parent,a,b):
 ```
 
 우선 unionparent부분 수정하고 맨 마지막에 parent를 돌면서 한번씩 getparent를 써서 누락된것을 바꿔주는 작업을 거침
+
+
+(2023-04-07)
+
+[베스트앨범](https://school.programmers.co.kr/learn/courses/30/lessons/42579?language=python3)
+
+```python
+def solution(genres, plays):
+    answer = []
+    total_genre=dict()
+    order_genre=dict()
+    #장르 순서
+    for i,(k,v) in enumerate(zip(genres,plays)):
+        total_genre[k]=total_genre.get(k,0)+v
+        order_genre[k]=order_genre.get(k,list())+[(v,i)]
+    for k,v in order_genre.items():
+        order_genre[k]=sorted(order_genre[k],key=lambda x: (-x[0],x[1]))
+    for g,_ in sorted(total_genre.items(),reverse=True):
+        i=0
+        for _,idx in order_genre[g]:
+            if i==2:
+                break
+            answer.append(idx)
+            i+=1
+    return answer
+```
+생각보다 잘짰다고 생각했는데 테케 10개중 3개만 맞음.
+
+total genre로 많이 재생된 순서 만들고 ...
+
+스스로 생각을 어떻게 했는지 정리하다가 어디가 잘못되었는지 찾음
+
+```python
+def solution(genres, plays):
+    answer = []
+    total_genre=dict()
+    order_genre=dict()
+    #장르 순서
+    for i,(k,v) in enumerate(zip(genres,plays)):
+        total_genre[k]=total_genre.get(k,0)+v
+        order_genre[k]=order_genre.get(k,list())+[(v,i)]
+    for k,v in order_genre.items():
+        order_genre[k]=sorted(order_genre[k],key=lambda x: (-x[0],x[1]))
+    for g,_ in sorted(total_genre.items(),key=lambda x:-x[1]):
+        i=0
+        for _,idx in order_genre[g]:
+            if i==2:
+                break
+            answer.append(idx)
+            i+=1
+    return answer
+```
+많이 재생된 순서를 value로 정렬하는게아닌 알파벳으로 정렬중이었음...

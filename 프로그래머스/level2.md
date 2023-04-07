@@ -153,3 +153,34 @@ def solution(n, wires):
 
 머릿속으로는 bfs, dfs로 풀면된다! 하는데 학부때 했던 구현방법이 기억안나서 이렇게 함
 
+(2023-04-07)
+
+[기능개발](https://school.programmers.co.kr/learn/courses/30/lessons/42586?language=python3)
+
+```python
+def solution(progresses, speeds):
+    answer = []
+    current_list=progresses
+    while len(current_list):
+        current_list=[x+y for x,y in zip(current_list,speeds)]
+        if current_list[0]>=100:
+            flag=check(current_list)
+
+            if flag==-1:
+                answer.append(len(current_list))
+                return answer
+            else:
+                answer.append(flag)
+                current_list=current_list[flag:]
+                speeds=speeds[flag:]
+
+
+def check(current_list):
+    for i,v in enumerate(current_list):
+        if v<100:
+            return i
+    return -1
+```
+대기열 걸린것같은 큐 만드는 문제.
+
+뭔가 머리속으로 speed와 progress를 더하면서 경과보는게 직관적이라 그렇게 짰는데 제한이 없어서 바로 통과
