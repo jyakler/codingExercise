@@ -182,6 +182,26 @@ def solution(n, costs):
 ```
 sort를 덜하니까 좀더 빠를 줄 알았는데 heappush를 계속 해서 그런지 느림... 테케기준으로는 이게 시간이 더 오래걸림
 
+(2023-04-13)
+```python
+def solution(n, costs):
+    costs=sorted(costs,key=lambda x: x[2])
+    visited=[i for i in range(n)]
+    answer=0
+    for s,e,c in costs:
+        if find(s,visited)!=find(e,visited):
+            answer+=c
+            visited[find(e,visited)]=s
+    return answer
+
+def find(num,visited):
+    while visited[num]!=num:
+        num=visited[num]
+    return num
+```
+다시 풀려다보니 프림이던 다익스트라던 잘 모르겠고 크루스칼 알고리즘이 기억이나서 짜기 좋았음.
+
+굳
 
 [가장 먼 노드](https://school.programmers.co.kr/learn/courses/30/lessons/49189?language=python3)
 ------
