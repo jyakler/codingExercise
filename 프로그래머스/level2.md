@@ -50,7 +50,18 @@ def solution(clothes):
     l=list(map(lambda x: x+1,l))
     return math.prod(l)-1
 ```
-
+(2023-04-12)
+```python
+def solution(clothes):
+    all_clothes=dict()
+    for _, types in clothes:
+        all_clothes[types]=all_clothes.get(types,1)+1
+    diff=1
+    for _, value in all_clothes.items():
+        diff*=value
+    return diff-1
+```
+코테 준비겸 다시 예전에 풀었던 문제도 다지우고 풀어보고있는데 확실히 예전에 짠것보다 더 쉽게 짜는 것 같음
 
 [가장 큰 수](https://school.programmers.co.kr/learn/courses/30/lessons/42746?language=python3#)
 ----------

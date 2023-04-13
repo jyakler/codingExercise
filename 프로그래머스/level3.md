@@ -302,6 +302,29 @@ def unionparent(parent,a,b):
 
 우선 unionparent부분 수정하고 맨 마지막에 parent를 돌면서 한번씩 getparent를 써서 누락된것을 바꿔주는 작업을 거침
 
+(2023-04-13)
+```python
+def solution(n, computers):
+    answer = 0
+    parent=[i for i in range(n)]
+    for i in range(n):
+        for j in range(i,n):
+            if computers[i][j]==1:
+                p=find(i,parent)
+                e=find(j,parent)
+                parent[e]=p
+
+    return len(set([find(i,parent) for i in parent]))
+
+def find(num,parent):
+    while parent[num]!=num:
+        num=parent[num]
+    return num
+```
+코테 준비겸 union&find 문제 찾다가 예전에 푼 문제 다시 풀게됨
+
+다시 해보니까 좀더 코드가 간결해진것 같은 느낌~
+
 
 (2023-04-07)
 
