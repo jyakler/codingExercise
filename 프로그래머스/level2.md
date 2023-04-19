@@ -195,3 +195,71 @@ def check(current_list):
 대기열 걸린것같은 큐 만드는 문제.
 
 뭔가 머리속으로 speed와 progress를 더하면서 경과보는게 직관적이라 그렇게 짰는데 제한이 없어서 바로 통과
+
+(2023-04-17)
+
+[큰 수 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/42883)
+```python
+def solution(number, k):
+    answer=''
+    stack=[]
+    left=len(number)
+    out=0
+    for i in number:
+        if out==k:
+            stack.append(i)
+            continue
+        if not stack:
+            stack.append(i)
+        else:
+            while stack:
+                if stack[-1]<i:
+                    stack.pop()
+                    out+=1
+                else:
+                    break
+                if out==k:
+                    break
+            stack.append(i)
+    return ''.join(stack[:left-k])
+```
+처음에는 stack으로 구현하지 않고 list로 구현하면서  len()-k개의 자리를 보면서 찾은 max의 index를 가지고 그 다음 루프는 index+1부터 len()-k+1 이런식으로 보면서 하였는데, 정답은 맞지만 효율성에서 빠꾸를 먹음.
+
+Greedy알고리즘인 만큼 단순하게 2개씩 비교하면서 스택으로 쌓았더니 쉽게 해결... 쉬운문제를 1시간좀 넘게 고민함
+
+(2023-04-19)
+
+[H-index](https://school.programmers.co.kr/learn/courses/30/lessons/42747?language=python3)
+```python
+def solution(citations):
+    n=len(citations)
+    # sorted_array=sorted(citations)
+    max_c=0
+    for h in range(1,n+1):
+        if len([i for i in citations if i>=h])>=h:
+            max_c=h
+        else: break
+    return max_c
+```
+처음에는 h index가 도대체 뭔말인지 이해못해서 학자가낸 논문의 인용횟수 h 를 가지고 하는것인줄알았는데
+
+자료 찾아보니까 그냥 h가 꼭 논문의 인용회수에 등장하는 숫자가 아니여도 된다는 것을 안 후는 너무 쉬웠음.
+
+효율성문제가 있었다면 O(n^2)라서 어떻게 될지는 모르겠지만 아무튼 테스트는 통과
+
+```python
+def solution(citations):
+    n=len(citations)
+    sorted_array=sorted(citations)
+    for i in range(n):
+        if sorted_array[i]>=n-i:
+            return n-i
+    return 0
+```
+정렬 함수가 O(nlogn)이라 이거써서 좀 줄여보려했음. 우선 n개(전체)가 답이될거면 제일 처음께(제일작은게) n이상이여야 하고 두번재꺼는 n-1이상 ... 이런식으로 진행되서 구현함
+
+```python
+def solution(citations):
+    return max(map(min,enumerate(sorted(citations,reverse=True),start=1)))
+```
+역시 한줄로 구현했었던 사람이 있어서 가져옴. 코드 자체는 위에 짠것을 reverse order로 보는 것
