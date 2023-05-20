@@ -40,6 +40,47 @@ $12=(55+5)/2$ 이 예시를 보고 다시 처음부터 생각해야 했다.
 
 바로 직접 코드를 짜보았다. 접근 방식만 알면 생각보다 문제가 쉽게 풀리는 느낌을 받았음
 
+(2023-05-13)
+```python
+def cal(dict1, dict2):
+    temp=[]
+    for i in dict1:
+        if i==0:
+            continue
+        for j in dict2:
+            if j==0:
+                continue
+            temp.append(i+j)
+            temp.append(abs(i-j))
+            temp.append(i*j)
+            temp.append(i//j)
+            temp.append(j//i)
+    return temp
+
+def solution(N, number):
+    d=dict()
+    for i in range(9):
+        d[i]=d.get(i,set())
+    d[i].add(0)
+
+    for i in range(1,9):
+        if int(N*i)<=32000:
+            d[i].add(int(str(N)*i))
+        
+    for i in range(1,9):
+        for j in range(1,9-i):
+            d[i+j].update(cal(d[i],d[j]))
+    for i in range(9):print(d[i])
+    
+    for i in range(9):
+        
+        if int(number) in d[i]:
+            return i
+    return -1
+```
+오랜만에 문제 다시풀어보았는데 비슷한 방식으로 접근해서 풀게되었다.
+
+
 [정수 삼각형](https://school.programmers.co.kr/learn/courses/30/lessons/43105?language=python3)
 -------
 ```python
