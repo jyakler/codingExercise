@@ -438,3 +438,29 @@ def solution(genres, plays):
     return answer
 ```
 많이 재생된 순서를 value로 정렬하는게아닌 알파벳으로 정렬중이었음...
+
+(2023-05-26)
+
+오랜만에 다시 문제 풀어봄
+
+```python
+import heapq
+def solution(genres, plays):
+    answer = []
+    ordered_genres=dict()
+    ordered_plays=dict()
+    for idx,(genre,play) in enumerate(zip(genres,plays)):
+        ordered_genres[genre]=ordered_genres.get(genre,0)+play
+        ordered_plays[genre]=ordered_plays.get(genre,[])
+        #maxheap 되기위해 play에 - 곱하기
+        heapq.heappush(ordered_plays[genre],(-play,idx))
+    for genre, _ in sorted(ordered_genres.items(),key=lambda x:x[1], reverse=True):
+        i=0
+        while ordered_plays[genre]:
+            if i==2:break
+            answer.append(heapq.heappop(ordered_plays[genre])[1])
+            i+=1
+        
+    return answer
+```
+기본적으로 예전코드와 비슷하나, list쓴뒤 정렬하는것이아닌 heap만 사용해서 구현해보았음
