@@ -7,22 +7,19 @@ def solution(queue1, queue2):
     total=sum(queue1)+sum(queue2)
     tl=len(queue1)+len(queue2)
     target=total/2
-    current=sum(queue1)
-    while answer<tl*2:
-        if current==target:
+    while 1:
+        if answer>tl:
+            answer=-1
             break
-        if current>target:
+        if sum(queue1)==target:
+            break
+        elif sum(queue1)>target:
             answer+=1
-            p=queue1.popleft()
-            current-=p
-            queue2.append(p)
+            queue2.append(queue1.popleft())
         else:
             answer+=1
-            p=queue2.popleft()
-            current+=p
-            queue1.append(p)
-    if answer>=tl*2:
-        return -1
+            queue1.append(queue2.popleft())
+            
             
     
     return answer
