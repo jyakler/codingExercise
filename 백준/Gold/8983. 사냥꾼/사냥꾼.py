@@ -16,23 +16,19 @@ sol = 0
 M, N, L, shoots, animals = input_data()
 def low(x,y,l,shoots):
     s,e=0,len(shoots)
+    # |x-사대x | +y = L
+    low=x+y-l
+    high=x-y+l
     while s<e:
         #아래에서 올라옴
         mid=s+(e-s)//2
-        dis=abs(x-shoots[mid])+y
-        if dis<=l:
+        
+        if low<=shoots[mid]<=high:
             return 1
+        elif shoots[mid]<low:#사대 위치가 더 왼쪽에 있음
+            s=mid+1
         else:
             e=mid
-    s,e=0,len(shoots)
-    while s<e:
-        #위에서 내려옴
-        mid=s+(e-s)//2
-        dis=abs(x-shoots[mid])+y
-        if dis<=l:
-            return 1
-        else:
-            s=mid+1
     return 0
 
 # 여기서부터 작성
