@@ -13,11 +13,8 @@ for i in range(N):
     dp[i][r],dp[i][g],dp[i][b]=map(int,input().split())
 
 for i in range(1,N):
-    max_til_now=[1e9,1e9,1e9]
     for rgb in range(3):
-        max_til_now[rgb]=min(max_til_now[rgb],
-                             dp[i][rgb]+dp[i-1][(rgb-1)%3],
-                             dp[i][rgb]+dp[i-1][(rgb-2)%3])
-    dp[i]=max_til_now
+        dp[i][rgb]=min(dp[i][rgb]+dp[i-1][(rgb-1)%3],
+                       dp[i][rgb]+dp[i-1][(rgb-2)%3])
 
 print(min(dp[-1]))
