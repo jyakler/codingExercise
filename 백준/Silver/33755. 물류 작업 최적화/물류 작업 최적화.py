@@ -6,18 +6,21 @@ N = int(input())
 A = [0]+list(map(int, input().split()))
 
 
-right_sum = [[0 for _ in range(N+1)] for _ in range(N+1)]
-left_sum = [[0 for _ in range(N+1)] for _ in range(N+1)]
+right_max = [0]*(N+2)
+left_max = [0]*(N+1)
 current = 0
 
+
+# 오른 -> 왼
 for i in range(1, N+1):
-    for j in range(i+1, N+1):
-        right_sum[i][j] = right_sum[i][j-1]+A[j]
+    left_max[i] = A[i]
+    left_max[i] = max(left_max[i-1]+A[i], left_max[i])
 
 
 for i in range(N, 0, -1):
-    for j in range(i-1, 0, -1):
-        left_sum[i][j] = left_sum[i][j+1]+A[j]
+    right_max[i] = A[i]
+    right_max[i] = max(right_max[i+1]+A[i], right_max[i])
+
 
 for i in range(1, N+1):
-    print(max(right_sum[i])+A[i]+max(left_sum[i]), end=" ")
+    print(right_max[i]-A[i]+left_max[i], end=" ")
