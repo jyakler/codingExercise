@@ -1,58 +1,120 @@
-import sys
-from itertools import combinations
-import copy
-from collections import deque
+def load():
+    # 첫째 줄에서 수열의 크기 N을 입력받습니다.
+    N, M = list(map(int, input().split()))
 
-input = sys.stdin.readline
+    # N개의 수열을 입력받습니다.
+    sequences = []
+    for _ in range(N):
+        num = list(map(int, input().split()))
+        sequences.append(num)
 
-N, M = map(int, input().split())
+    # 입력된 수열 출력 (테스트용)
+    # print("입력된 수열:", sequences)
 
-maze = []
-maze.append([1 for _ in range(M+2)])
-for _ in range(N):
-    maze.append([1]+list(map(int, input().split()))+[1])
-maze.append([1 for _ in range(M+2)])
+    return N,M, sequences
 
-empty = []
-virus = []
-for y in range(1, N+1):
-    for x in range(1, M+1):
-        if maze[y][x] == 2:
-            virus.append((x, y))
-        elif maze[y][x] == 0:
-            empty.append((x, y))
+def make_walls(N,M,sequences):
 
-combs = combinations(empty, 3)
+    from itertools import combinations
 
-move = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-max_safe = 0
+    points = []
+    virus = []
 
-for comb in combs:
-    # 초기화
-    new_maze = copy.deepcopy(maze)
-    virusq = deque()
-    for i in virus:
-        virusq.append(i)
+    for i in range(N):
+        for j in range(M):
+            if sequences[i][j] == 0 :
 
-    # 추가 벽
-    for wallx, wally in comb:
-        new_maze[wally][wallx] = 1
+                points.append((i,j))
+            
+            elif sequences[i][j] == 2 :
+                virus.append((i,j))
 
-    while len(virusq) > 0:
-        startx, starty = virusq.popleft()
-        for mx, my in move:
-            if new_maze[starty+my][startx+mx] == 0:
-                new_maze[starty+my][startx+mx] = 2
-                virusq.append((startx+mx, starty+my))
+    
+    combs = list(combinations(points, 3))
 
-    total_safe = 0
-    for i in new_maze:
-        total_safe += i.count(0)
-
-    # for i in new_maze:
-    #     print(i)
-    # print(f"current safe: {total_safe}\n========\n")
-    max_safe = max(max_safe, total_safe)
+    return len(points)-3, virus , combs
 
 
-print(max_safe)
+
+
+def bfs(N, M, virus, sequences):
+
+    from collections import deque
+
+    rs = 0
+
+
+    visited = [[ 0 for _ in range(M) ] for _ in range(N)]
+
+
+    queue = deque(virus)
+
+    move = [(1,0),(0,1),(-1,0),(0,-1)]
+
+
+    while queue:
+
+        q = queue.popleft()
+
+        x,y = q
+
+        visited[x][y] = 1
+
+        for m in move:
+            nX = x+m[0]
+            nY = y+m[1]
+
+
+            if (0 <= nX < N) and (0 <= nY < M):
+
+                if (visited[nX][nY] != 1):
+
+                    if (sequences[nX][nY] == 0):
+                        visited[nX][nY] = 1
+                        queue.append((nX,nY))
+                        rs += 1
+
+    return rs
+
+def main():
+    import copy
+    N,M, sequences = load()
+
+    answer = 0
+
+    spaces,virus, wall_points = make_walls(N=N, M=M, sequences=sequences)
+
+    for walls in wall_points:
+        new_sequences = copy.deepcopy(sequences)
+        
+        for wall in walls:
+            new_sequences[wall[0]][wall[1]] = 1
+
+        rs = bfs(N,M, virus, new_sequences)
+
+        rest = (spaces - rs)
+
+        if rest >= answer:
+            answer = rest
+
+    print(answer)
+
+if __name__ == "__main__":
+    main()
+
+"""[
+[2, 1, 0, 0, 1, 1, 2], 
+[1, 0, 1, 0, 1, 2, 2], 
+[0, 1, 1, 0, 1, 2, 2], 
+[0, 1, 0, 0, 0, 1, 2], 
+[0, 0, 0, 0, 0, 1, 1], 
+[0, 1, 0, 0, 0, 0, 0], 
+[0, 1, 0, 0, 0, 0, 0]]"""
+
+"""[[2, 1, 0, 0, 1, 1, 2], 
+[1, 0, 1, 0, 1, 2, 2], 
+[0, 1, 1, 0, 1, 2, 2], 
+[0, 1, 0, 0, 0, 1, 2], 
+[0, 0, 0, 0, 0, 1, 1], 
+[0, 1, 0, 0, 0, 0, 0], 
+[0, 1, 0, 0, 0, 0, 0]]"""
